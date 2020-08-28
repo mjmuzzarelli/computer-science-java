@@ -1,4 +1,4 @@
-package semester_one.week_one;
+package semester_one.week_one.assignments;
 
 /**
  * Name:            Michael Muzzarelli
@@ -13,8 +13,11 @@ public class Schedule {
         System.out.println("Email:     michael.muzzarelli@student.swic.edu");
         System.out.println("Semester:  Fall 2020");
         System.out.println(" ");
-        System.out.println("COURSE         DAY        TIME          ROOM       INSTRUCTOR");
-        System.out.println("MATH 171-001   MoTuThFr   9:00A-9:50A   MC2183     Collins");
-        System.out.println("PSYC 225-IN1   Internet   Internet      Internet   Hunter");
+        System.out.println("COURSE         DAY        TIME          ROOM     "
+                + "  INSTRUCTOR");
+        System.out.println("MATH 171-001   MoTuThFr   9:00A-9:50A   MC2183   "
+                + "  Collins");
+        System.out.println("PSYC 225-IN1   Internet   Internet      Internet "
+                + "  Hunter");
     }
 }
