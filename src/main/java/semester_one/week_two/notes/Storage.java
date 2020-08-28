@@ -1,4 +1,4 @@
-package semester_one.week_two;
+package semester_one.week_two.notes;
 
 /**
  * In regard to storage, there are primitive data types...
@@ -73,10 +73,4 @@ package semester_one.week_two;
  *       - similar to scientific notation, 3.02 = .302x10^1
  */
 public class Storage {
-
-
-
-    /*
-     *
-     */
 }
