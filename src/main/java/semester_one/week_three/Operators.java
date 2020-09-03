@@ -2,7 +2,7 @@ package semester_one.week_three;
 
 /**
  * There are a number of operators available including arithmetic,
- * relational, unary, and logical, among others.
+ * relational, unary, logical, and compound assignment, among others.
  *
  * Arithmetic operators:
  *      + addition
@@ -37,37 +37,78 @@ package semester_one.week_three;
  *      || or
  *      ! not
  *      ^ exclusive or, only one is true
+ *
+ * Compound assignment operators:
+ *      x = x + y  ->  x += y
+ *      z = z - 3  ->  z -= 3
+ *      y = 2 * y  ->  y *= 2
+ *      r = r / q  ->  r /= q
+ *      s = s % b  ->  s %= b
+ *
+ * Ternary operators (or conditional):
+ *      - used for selection statements, in lieu of if...else statements
+ *      a ? b : c;
+ *
+ * @author Michael Muzzarelli
+ * @since September 3, 2020
  */
 public class Operators {
 
     public static void main(String[] args) {
         int x = 5, y = 2, z = 12;
 
-        System.out.println("Arithmetic operators:");
+        System.out.println("ARITHMETIC OPERATORS:");
         System.out.println(x + y);
         System.out.println(x - z);
         System.out.println(x * z);
         System.out.println(z / x);
         System.out.println(z / y);
 
-        System.out.println("Real division of x and y:");
+        System.out.println("REAL DIVISION:");
         System.out.println((double) z / (double) x); // typecasting
         System.out.println((double) z / x); // mixed mode expression
         System.out.println(z / (double) x);
         System.out.println((double) (z / x));
 
-        System.out.println("Modulus operators:");
+        System.out.println("MODULUS OPERATORS:");
         System.out.println(z % x);
         System.out.println(x % z);
         System.out.println(x % y);
         System.out.println((5 * z) % (y + 1));
 
-        System.out.println("Relational operators:");
+        System.out.println("RELATIONAL OPERATORS:");
         System.out.println(z < x);
         System.out.println(x <= x);
         System.out.println(y >= 0);
         System.out.println(z + 10 > 6*x);
         System.out.println(y != x);
         System.out.println(3*y == x+1);
+
+        System.out.println("INCREMENTAL AND DECREMENTAL OPERATORS:");
+        System.out.println("x = " + x);
+        x++;
+        ++x;
+        System.out.println("x = " + x);
+        z = ++x;
+        System.out.println("x = " + x + ", z = " + z);
+        z = x++;
+        System.out.println("x = " + x + ", z = " + z);
+        y = ++x + --z;
+        System.out.println("x = " + x + ", y = " +  y + ", z = " + z);
+        y = 2*(z--) + 3*x++;
+        System.out.println("x = " + x + ", y = " +  y + ", z = " + z);
+        y = (z--)%4 + (++x)%5;
+        System.out.println("x = " + x + ", y = " +  y + ", z = " + z);
+
+        System.out.println("COMPOUND ASSIGNMENT OPERATORS:");
+        z -= 10; // z = z - 10;
+        x += z; // x = x + z;
+        y *= 2; // y = y * 2;
+        x %= 2; // x = x % 2;
+        z /= 3; // z = z / 3;
+        System.out.println("x = " + x + ", y = " +  y + ", z = " + z);
+
+        System.out.println("TERNARY OPERATORS:");
+
     }
 }
