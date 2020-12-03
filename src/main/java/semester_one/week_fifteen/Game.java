@@ -37,7 +37,11 @@ public class Game {
         window.setLocationRelativeTo(null);
 
         // define the font
-        buttonFont = new Font("Arial", Font.BOLD, 120);
+        int fontSize = 120 - 20 * (GRID_SIZE / 3);
+        if (fontSize <= 3) {
+            fontSize = 10;
+        }
+        buttonFont = new Font("Arial", Font.BOLD, fontSize);
 
         // define the player turn
         playerX = true;
@@ -63,7 +67,7 @@ public class Game {
             grid[i] = new JButton();
             grid[i].setFont(buttonFont);
             grid[i].addActionListener(listener);
-            grid[i].addMouseListener(new AnnoyingListener());
+//            grid[i].addMouseListener(new AnnoyingListener());
             grid[i].setBackground(new Color(245, 245, 245));
         }
 
@@ -111,47 +115,74 @@ public class Game {
                         JOptionPane.INFORMATION_MESSAGE);
             }
 
-            reset();
+//            reset();
         }
     }
 
     private boolean checkWinner() {
-        if (grid[0].getText().equals(grid[1].getText()) &&
+        boolean isWinner = true;
+
+        for (int i = 0; i < GRID_SIZE; i++) {
+            isWinner = true;
+            if (!grid[GRID_SIZE * i].getText().equals("")) {
+                int j = 1;
+                while (j < GRID_SIZE && isWinner) {
+                    if (!grid[GRID_SIZE * i].getText().equals(grid[GRID_SIZE * i + j++].getText())) {
+                        isWinner = false;
+                    }
+                }
+
+                if (isWinner) {
+                    return true;
+                }
+            }
+        }
+
+        /*
+        // check for winners along the rows
+        if (!grid[0].getText().equals("") && grid[0].getText().equals(grid[1].getText()) &&
             grid[0].getText().equals(grid[2].getText())) {
             return true;
         }
 
-        if (grid[3].getText().equals(grid[4].getText()) &&
+        else if (!grid[3].getText().equals("") && grid[3].getText().equals(grid[4].getText()) &&
                 grid[3].getText().equals(grid[5].getText())) {
             return true;
         }
 
+        else if (!grid[6].getText().equals("") && grid[6].getText().equals(grid[7].getText()) &&
+                grid[6].getText().equals(grid[8].getText())) {
+            return true;
+        }
+
         // check for winners along the columns
-        if (grid[0].getText().equals(grid[3].getText()) &&
+        else if (!grid[6].getText().equals("") && grid[0].getText().equals(grid[3].getText()) &&
                 grid[0].getText().equals(grid[6].getText())) {
             return true;
         }
 
-        if (grid[1].getText().equals(grid[4].getText()) &&
+        else if (grid[1].getText().equals(grid[4].getText()) &&
                 grid[1].getText().equals(grid[7].getText())) {
             return true;
         }
 
-        if (grid[2].getText().equals(grid[5].getText()) &&
+        else if (grid[2].getText().equals(grid[5].getText()) &&
                 grid[2].getText().equals(grid[8].getText())) {
             return true;
         }
 
         //check for winners along the diagonals
-        if (grid[0].getText().equals(grid[4].getText()) &&
+        else if (grid[0].getText().equals(grid[4].getText()) &&
                 grid[0].getText().equals(grid[8].getText())) {
             return true;
         }
 
-        if (grid[6].getText().equals(grid[3].getText()) &&
+        else if (grid[6].getText().equals(grid[3].getText()) &&
                 grid[0].getText().equals(grid[6].getText())) {
             return true;
         }
+
+        return false; */
 
         return false;
     }
