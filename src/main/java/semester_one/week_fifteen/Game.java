@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Random;
 
 /**
  * The game class of the {@link TicTacToe} application.
@@ -21,12 +24,16 @@ public class Game {
     private JButton[] grid;
     private Font buttonFont;
     private boolean playerX;
+    private int turnNumber;
+    private Random random;
 
     public Game() {
         // construct the window
         window = new JFrame("Tic-Tac-Toe");
+        System.out.println(Toolkit.getDefaultToolkit().getScreenSize());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setSize(800, 600);
+        window.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight());
         window.setLocationRelativeTo(null);
 
         // define the font
@@ -35,13 +42,19 @@ public class Game {
         // define the player turn
         playerX = true;
 
+        // define the turn number
+        turnNumber = 1;
+
+        // define the random object
+        random = new Random();
+
         // define the listener
         listener = new ButtonListener();
 
         // construct the panel
         mPanel = new JPanel();
-        mPanel.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
-        mPanel.setBackground(Color.LIGHT_GRAY);
+        mPanel.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE, 5, 5));
+        mPanel.setBackground(Color.WHITE);
 
         // construct the buttons
         grid = new JButton[GRID_SIZE * GRID_SIZE];
@@ -50,6 +63,8 @@ public class Game {
             grid[i] = new JButton();
             grid[i].setFont(buttonFont);
             grid[i].addActionListener(listener);
+            grid[i].addMouseListener(new AnnoyingListener());
+            grid[i].setBackground(new Color(245, 245, 245));
         }
 
         // add components to the panel
@@ -79,23 +94,83 @@ public class Game {
             if (button.getText().equals("")) {
                 if (playerX) {
                     button.setText("X");
+                    button.setForeground(Color.GREEN.darker());
                 } else {
                     button.setText("O");
+                    button.setForeground(Color.RED);
                 }
 
                 playerX = !playerX;
             }
 
-            checkWinner();
+            if (checkWinner()) {
+                JOptionPane.showMessageDialog(mPanel, "We have a winner!", "Congratulations!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else if (turnNumber > GRID_SIZE * GRID_SIZE) {
+                JOptionPane.showMessageDialog(mPanel, "We have a cat's game!", "No moves left!",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+            reset();
         }
     }
 
     private boolean checkWinner() {
         if (grid[0].getText().equals(grid[1].getText()) &&
             grid[0].getText().equals(grid[2].getText())) {
-            System.out.println("Winner!");
+            return true;
+        }
+
+        if (grid[3].getText().equals(grid[4].getText()) &&
+                grid[3].getText().equals(grid[5].getText())) {
+            return true;
+        }
+
+        // check for winners along the columns
+        if (grid[0].getText().equals(grid[3].getText()) &&
+                grid[0].getText().equals(grid[6].getText())) {
+            return true;
+        }
+
+        if (grid[1].getText().equals(grid[4].getText()) &&
+                grid[1].getText().equals(grid[7].getText())) {
+            return true;
+        }
+
+        if (grid[2].getText().equals(grid[5].getText()) &&
+                grid[2].getText().equals(grid[8].getText())) {
+            return true;
+        }
+
+        //check for winners along the diagonals
+        if (grid[0].getText().equals(grid[4].getText()) &&
+                grid[0].getText().equals(grid[8].getText())) {
+            return true;
+        }
+
+        if (grid[6].getText().equals(grid[3].getText()) &&
+                grid[0].getText().equals(grid[6].getText())) {
+            return true;
         }
 
         return false;
+    }
+
+    private void reset() {
+        playerX = true;
+        turnNumber = 1;
+
+        for (JButton b : grid) {
+            b.setText("");
+        }
+    }
+
+    private class AnnoyingListener extends MouseAdapter {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            if (!playerX) {
+                window.setLocation(random.nextInt(800), random.nextInt(600));
+            }
+        }
     }
 }
