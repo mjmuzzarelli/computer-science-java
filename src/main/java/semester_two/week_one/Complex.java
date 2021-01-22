@@ -1,7 +1,5 @@
 package semester_two.week_one;
 
-import java.util.Objects;
-
 /**
  * A class representing a complex number.
  *
@@ -33,6 +31,7 @@ public class Complex {
     public void setImaginary(int value) {
         this.imaginary = value;
     }
+
     public int getReal() {
         return real;
     }
@@ -42,32 +41,61 @@ public class Complex {
     }
 
     public Complex add(Complex c) {
-        return null;
+        return new Complex(this.real + c.real, this.imaginary + c.imaginary);
     }
 
     public Complex subtract(Complex c) {
-        return null;
+        return new Complex(this.real + c.real, -this.imaginary - c.imaginary);
     }
 
     public Complex multiply(Complex c) {
-        return null;
+        return new Complex(this.real * c.real - this.imaginary * c.imaginary,
+                this.real * c.imaginary + this.imaginary * c.real);
     }
 
     public Complex divide(Complex c) {
-        return null;
+        int temp = c.real * c.real + c.imaginary * c.imaginary;
+
+        return new Complex((this.real * c.real + this.imaginary * c.imaginary) / temp,
+                (this.real * c.imaginary + this.imaginary * c.real) / temp);
+
     }
 
-    public Complex distance(Complex c) {
-        return null;
+    public double distance(Complex c) {
+        return Math.hypot(real, imaginary);
     }
 
     @Override
     public String toString() {
-        return "";
+        if (real == 0 && imaginary == 0) {
+            return "0";
+
+        } else if (imaginary == 0) {
+            return real + "";
+
+        } else if (real == 0 && imaginary == 1) {
+            return "i";
+
+        } else if (real == 0 && imaginary == -1) {
+            return "-i";
+
+        } else if (imaginary < -1) {
+            return real + (imaginary + "i");
+
+        } else if (imaginary == -1) {
+            return real + "-i";
+
+        } else if (imaginary == 1) {
+            return real + "+i";
+
+        } else {
+            return real + "+" + imaginary + "i";
+        }
     }
 
     @Override
-    public boolean equals(Object other) {
-        return false;
+    public boolean equals(Object o) {
+        return  this.real == ((Complex) o).real &&
+                this.imaginary == ((Complex) o).imaginary;
     }
 }
