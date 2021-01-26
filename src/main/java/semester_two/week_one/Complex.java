@@ -45,7 +45,7 @@ public class Complex {
     }
 
     public Complex subtract(Complex c) {
-        return new Complex(this.real + c.real, -this.imaginary - c.imaginary);
+        return new Complex(this.real - c.real, this.imaginary - c.imaginary);
     }
 
     public Complex multiply(Complex c) {
@@ -61,7 +61,7 @@ public class Complex {
 
     }
 
-    public double distance(Complex c) {
+    public double distance() {
         return Math.hypot(real, imaginary);
     }
 
@@ -78,6 +78,9 @@ public class Complex {
 
         } else if (real == 0 && imaginary == -1) {
             return "-i";
+
+        } else if (real == 0) {
+            return imaginary + "i";
 
         } else if (imaginary < -1) {
             return real + (imaginary + "i");
