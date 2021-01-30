@@ -34,4 +34,20 @@ public class StopSign extends Polygon {
     public StopSign() {
         this(0, 0, 50);
     }
+
+    public int getRightBound() {
+        return xpoints[2];
+    }
+
+    public int getLeftBound() {
+        return xpoints[7];
+    }
+
+    public int getUpperBound() {
+        return ypoints[0];
+    }
+
+    public int getLowerBound() {
+        return ypoints[5];
+    }
 }
