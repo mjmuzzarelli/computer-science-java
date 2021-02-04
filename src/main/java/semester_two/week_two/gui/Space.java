@@ -9,6 +9,7 @@ public class Space extends JPanel {
     private final Color BROWN = new Color(150, 75, 0);
     private static Random random;
     private StopSign[] signs;
+    private Picture pic;
     private int dX, dY;
 
     public Space() {
@@ -23,6 +24,9 @@ public class Space extends JPanel {
         signs[3] = new StopSign(0, 500, 40);
         dX = 8;
         dY = 6;
+
+        // create the picture
+        pic = new Picture(50, 50, 120, 60, "sword.png");
     }
 
     @Override
@@ -72,6 +76,11 @@ public class Space extends JPanel {
         for (StopSign s : signs) {
             g2.fill(s);
         }
+
+        // draw the picture
+        g2.rotate(pic.getTheta(), pic.getCenterX(), pic.getCenterY());
+        g2.drawImage(pic.getImage(), pic.x, pic.y, pic.width, pic.height, null);
+        g2.rotate(-pic.getTheta(), pic.getCenterX(), pic.getCenterY());
     }
 
     // move only the stop signs
@@ -82,12 +91,24 @@ public class Space extends JPanel {
         for (StopSign s : signs) {
             s.translate(dX, dY);
         }
-        repaint();
 
         if(signs[0].getRightBound() > this.getWidth() || signs[0].getLeftBound() < 0)
             dX = -dX;
         if(signs[0].getUpperBound() < 0 || signs[0].getLowerBound() > this.getHeight())
             dY = -dY;
+
+        // move the picture
+        pic.translate(0, pic.getdy());
+        pic.incrementTheta();
+        pic.pulse();
+
+        // check if the picture reaches the border
+        if (pic.getUpperBound() > getHeight() || pic.getLowerBound() < 0) {
+            pic.changeVerticalDirection();
+            pic.changeRotationDirection();
+        }
+
+        repaint();
 
         return true;
     }
