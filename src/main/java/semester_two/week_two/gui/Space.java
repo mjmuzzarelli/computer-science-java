@@ -34,7 +34,7 @@ public class Space extends JPanel {
         dY = 6;
 
         // create the picture
-        pic = new Picture(50, 50, 120, 60, "sword.png");
+        pic = new Picture(50, 50, 120, 60, "src/main/resources/sword.png");
     }
 
     @Override
