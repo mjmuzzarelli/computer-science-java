@@ -2,13 +2,14 @@ package semester_two.week_two.gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Space extends JPanel {
 
     private final Color BROWN = new Color(150, 75, 0);
     private static Random random;
-    private StopSign[] signs;
+    private ArrayList<StopSign> signs;
     private Picture pic;
     private int dX, dY;
 
@@ -17,11 +18,18 @@ public class Space extends JPanel {
 
         setBackground(Color.MAGENTA);
         random = new Random();
-        signs = new StopSign[4];
-        signs[0] = new StopSign(100, 100, 100);
-        signs[1] = new StopSign(750, 350, 20);
-        signs[2] = new StopSign(400, 50, 75);
-        signs[3] = new StopSign(0, 500, 40);
+//        signs = new StopSign[4];
+//        signs[0] = new StopSign(100, 100, 100);
+//        signs[1] = new StopSign(750, 350, 20);
+//        signs[2] = new StopSign(400, 50, 75);
+//        signs[3] = new StopSign(0, 500, 40);
+
+        signs = new ArrayList<>();
+        signs.add(new StopSign(100, 100, 100));
+        signs.add(new StopSign(750, 350, 20));
+        signs.add(new StopSign(400, 50, 75));
+        signs.add(new StopSign(0, 500, 40));
+
         dX = 8;
         dY = 6;
 
@@ -88,14 +96,14 @@ public class Space extends JPanel {
     // translate each stop sign
     //
     public boolean moveObjects() {
-        for (StopSign s : signs) {
-            s.translate(dX, dY);
-        }
+        for (StopSign ss : signs) {
+            ss.translate(ss.getdx(), ss.getdy());
 
-        if(signs[0].getRightBound() > this.getWidth() || signs[0].getLeftBound() < 0)
-            dX = -dX;
-        if(signs[0].getUpperBound() < 0 || signs[0].getLowerBound() > this.getHeight())
-            dY = -dY;
+            if(ss.getLeftBound() < 0 || ss.getRightBound() > getWidth())
+                ss.changeHoriztonalLDirection();
+            if(ss.getUpperBound() < 0 || ss.getLowerBound() > getHeight())
+                ss.changeVerticalDirection();
+        }
 
         // move the picture
         pic.translate(0, pic.getdy());
