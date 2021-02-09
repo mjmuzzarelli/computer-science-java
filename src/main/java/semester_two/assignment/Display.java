@@ -73,12 +73,29 @@ public class Display {
 
     private class AppleCreationTimer implements ActionListener {
 
+        private int applesCreated = 0;
+
         @Override
         public void actionPerformed(ActionEvent e) {
+
             if (orchard.moveApples()) {
-                orchard.getApples().add(new Apple(random.nextInt(870),
-                        random.nextInt(100) - 200,
-                        30, 30, random.nextInt(10), Color.RED));
+                if (applesCreated < 10) {
+                    orchard.getApples().add(new Apple(random.nextInt(870),
+                            random.nextInt(100) - 200,
+                            30, 30, 4, Color.RED));
+                } else if (applesCreated >= 10 && applesCreated < 20) {
+                    orchard.getApples().add(new Apple(random.nextInt(870),
+                            random.nextInt(100) - 200,
+                            30, 30, 8, Color.RED));
+                } else if (applesCreated >= 20) {
+                    orchard.getApples().add(new Apple(random.nextInt(870),
+                            random.nextInt(100) - 200,
+                            30, 30, 10, Color.RED));
+                }
+
+                applesCreated++;
+
+                System.out.println(applesCreated);
             } else {
                 appleCreationTimer.stop();
             }
