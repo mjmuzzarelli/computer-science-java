@@ -57,11 +57,15 @@ public class Display {
 
             switch (code) {
                 case KeyEvent.VK_D:
-                    orchard.getBasket().translate(10);
+                    if (orchard.getBasket().getRightBound() != frame.getWidth()) {
+                        orchard.getBasket().translate(10);
+                    }
                     break;
 
                 case KeyEvent.VK_A:
-                    orchard.getBasket().translate(-10);
+                    if (orchard.getBasket().getLeftBound() != 0) {
+                        orchard.getBasket().translate(-10);
+                    }
                     break;
             }
         }
