@@ -8,6 +8,7 @@ public class Orchard extends JPanel {
 
     private Basket basket;
     private ArrayList<Apple> apples;
+    private Background background;
     private int applesMissed;
 
     public Orchard() {
@@ -15,6 +16,7 @@ public class Orchard extends JPanel {
 
         basket = new Basket(0, 450, 100, 100, Color.BLACK);
         apples = new ArrayList<>();
+        background = new Background(0, 0, 900, 600);
     }
 
     @Override
@@ -22,6 +24,10 @@ public class Orchard extends JPanel {
         super.paintComponent(g);
 
         Graphics2D graphics = (Graphics2D) g;
+
+        graphics.drawImage(background.getImage(), (int) background.getX(),
+                (int) background.getY(), (int) background.getWidth(),
+                (int) background.getHeight(), null);
 
         graphics.drawString("Apples Caught: " + basket.getAppleCount(), 10, 20);
         graphics.drawString("Apples Missed: " + applesMissed, 460, 20);
