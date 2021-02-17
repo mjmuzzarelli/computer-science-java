@@ -29,9 +29,6 @@ public class Orchard extends JPanel {
                 (int) background.getY(), (int) background.getWidth(),
                 (int) background.getHeight(), null);
 
-        graphics.drawString("Apples Caught: " + basket.getAppleCount(), 10, 20);
-        graphics.drawString("Apples Missed: " + applesMissed, 460, 20);
-
         graphics.setColor(basket.getColor());
         graphics.fill(basket);
 
@@ -39,6 +36,13 @@ public class Orchard extends JPanel {
             graphics.setColor(apples.get(i).getColor());
             graphics.fill(apples.get(i));
         }
+
+        graphics.setColor(Color.MAGENTA);
+        graphics.fillRect(0, 0, 900, 30);
+
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Apples Caught: " + basket.getAppleCount(), 10, 20);
+        graphics.drawString("Apples Missed: " + applesMissed, 460, 20);
     }
 
     public boolean moveApples() {
