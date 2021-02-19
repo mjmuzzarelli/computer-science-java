@@ -7,8 +7,8 @@ public class Display extends JPanel {
 
     // a controlled by a timer
     // b controlled by the keyboard
-    // c controlled by the mouse
-    private Rectangle a, b, c;
+    // c controlled by the mouse click
+    private final Rectangle a, b, c;
 
     public Display() {
         super();
@@ -47,5 +47,26 @@ public class Display extends JPanel {
         b.y += deltaY;
 
         repaint();
+    }
+
+    public void updateBasket(Point p) {
+        c.x = (int) p.getX();
+        c.y = (int) p.getY();
+
+        repaint();
+    }
+
+    public void updateBasketPosition(int x) {
+        c.x = x - c.width / 2;
+
+        repaint();
+    }
+
+    public int getUpperBound() {
+        return c.y;
+    }
+
+    public int getLowerBound() {
+        return c.y + c.height;
     }
 }

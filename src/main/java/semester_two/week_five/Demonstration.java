@@ -1,10 +1,7 @@
 package semester_two.week_five;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class Demonstration {
 
@@ -25,6 +22,7 @@ public class Demonstration {
         frame.add(panel);
 
         frame.addKeyListener(new KeyboardMovementListener());
+        frame.addMouseMotionListener(new MouseMovementListener());
 
         frame.setVisible(true);
 
@@ -62,6 +60,25 @@ public class Demonstration {
         @Override
         public void keyReleased(KeyEvent e) {
 //            System.out.println("RELEASED : " + e.getKeyChar());
+        }
+    }
+
+    private class MouseMovementListener implements MouseMotionListener {
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            // not used
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+//            panel.updateBasketPosition(e.getX());
+
+            // move only if y-position falls within the yellow rectangle
+            if (e.getY() >= panel.getUpperBound()
+                    && e.getY() <= panel.getLowerBound()) {
+                panel.updateBasketPosition(e.getX());
+            }
         }
     }
 }
