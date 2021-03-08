@@ -104,7 +104,7 @@ public class MazeLoader {
             window.setSize(100,50);
 
         // Finally, show the maze
-        window.setResizable(false);
+//        window.setResizable(false);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }
@@ -161,7 +161,36 @@ public class MazeLoader {
     public boolean findPath(Point p)  {
         boolean foundSolution = false;
 
-        // STUDENTS FINISH CODE HERE
+        grid[p.x][p.y].setBackground(PATH_COLOR);
+
+        if (p.x == 0 || p.x == ROW - 1 || p.y == 0 || p.y == COL - 1) {
+            return true;
+        } else {
+            Color right = grid[p.x][p.y + 1].getBackground();
+            Color left = grid[p.x][p.y - 1].getBackground();
+            Color up = grid[p.x -1][p.y].getBackground();
+            Color down = grid[p.x + 1][p.y].getBackground();
+
+            if (!foundSolution && up == OPEN_COLOR) {
+                foundSolution = findPath(new Point(p.x - 1, p.y));
+            }
+
+            if (!foundSolution && right == OPEN_COLOR) {
+                foundSolution = findPath(new Point(p.x, p.y + 1));
+            }
+
+            if (!foundSolution && left == OPEN_COLOR) {
+                foundSolution = findPath(new Point(p.x, p.y - 1));
+            }
+
+            if (!foundSolution && down == OPEN_COLOR) {
+                foundSolution = findPath(new Point(p.x + 1, p.y));
+            }
+
+            if (!foundSolution) {
+                grid[p.x][p.y].setBackground(BAD_PATH_COLOR);
+            }
+        }
 
         return foundSolution;
     }
