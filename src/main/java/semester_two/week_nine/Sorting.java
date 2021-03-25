@@ -86,33 +86,42 @@ public class Sorting {
         }
 
         // print unsorted array
-        // System.out.println(Arrays.toString(values));
+         System.out.println(Arrays.toString(values));
 
-        // time the bubble sort
+        // time the appropriate sort
         long start = System.nanoTime();
-        bubbleSort(values);
+        insertionSort(values);
         long end = System.nanoTime();
 
         // print the sorted array and the time elapsed
-        // System.out.println(Arrays.toString(values));
+        System.out.println(Arrays.toString(values));
         System.out.println("Time elapsed: " + (end - start / Math.pow(10, 9)));
+
+        // verify the list is in sorted order
+        if(isSorted(values))
+            System.out.println("Sorted!");
+        else
+            System.out.println("Not in sorted order...");
+    }
+
+    private static boolean isSorted(int[] a) {
+        for(int i=0; i<a.length-1; i++)
+            if(a[i] > a[i+1])
+                return false;
+        return true;
     }
 
     public static void selectionSort(int[] a) {
         int minIndex = -1, temp = 0;
 
-        for (int i = 0; i < a.length - 1; i++) {
-            minIndex = i;
-
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[j] < a[minIndex]) {
+        for (int i = 0; i < a.length-1; i++) {
+            minIndex = i; //assume first element is smallest
+            for (int j = i + 1; j < a.length; j++)
+                if (a[j] < a[minIndex])
                     minIndex = j;
-                }
-            }
-
-            if (minIndex != i) {
+            if(minIndex != i) {
                 temp = a[minIndex];
-                a[minIndex] = a[i];
+                a[minIndex]= a[i];
                 a[i] = temp;
             }
         }
@@ -122,18 +131,40 @@ public class Sorting {
         boolean madeSwap = true;
         int passNumber = 0, temp = 0;
 
-        while (madeSwap && passNumber < a.length - 1) {
+        while (madeSwap && passNumber < a.length-1) {
             madeSwap = false;
 
-            for (int index = 0; index < a.length - passNumber - 1; index++) {
-                if (a[index] > a[index + 1]) {
+            for (int index = 0; index < a.length-passNumber-1; index++)
+                if(a[index] > a[index+1]) {
                     temp = a[index];
-                    a[index] = a[index + 1];
-                    a[index + 1] = temp;
+                    a[index] = a[index+1];
+                    a[index+1] = temp;
                     madeSwap = true;
                 }
-            }
+
             passNumber++;
+        }
+    }
+
+    public static void insertionSort(int[] a) {
+        int temp = 0, index = -1;
+        boolean indexFound = false;
+
+        for(int i=1; i<a.length; i++) {
+            index = i-1;
+            temp = a[i];
+            indexFound = false;
+
+            while(!indexFound && index >= 0) {
+                if(a[index] <= temp) {
+                    indexFound = true;
+                } else {
+                    a[index + 1] = a[index];
+                    index--;
+                }
+            }
+            // if(index + 1 != i)
+            a[index + 1] = temp;
         }
     }
 }
