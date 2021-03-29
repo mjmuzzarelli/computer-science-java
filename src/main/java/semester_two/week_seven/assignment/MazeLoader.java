@@ -53,7 +53,7 @@ public class MazeLoader {
         // of grid squares to use. Open the file and read in the size.
         try {
 
-            fileToRead = new Scanner(new File("maze.txt"));
+            fileToRead = new Scanner(new File("src/main/resources/maze/MazeA.txt"));
             ROW = fileToRead.nextInt();
             COL = fileToRead.nextInt();
         }
