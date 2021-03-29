@@ -58,24 +58,30 @@ import java.util.Scanner;
  *
  * Success! The algorithmic analysis of this sort is that the first parse will make (size - 1) comparisons,
  * decrementing with each pass through the algorithm. This is probably the worst sorting algorithm because of how
- * many comparisons it makes.
+ * many comparisons it makes. The algorithmic analysis for this sort is O(n) = n^2.
  *
  * The second sorting algorithm we will cover is the selection sort. It takes a series of numbers, compares a
  * particular value with each element in the series, memorizes the index of the lowest value, and makes one swap per
- * pass. The upside is a potential lower number of swaps but the downside is that we cannot exit early.
+ * pass. The upside is a potential lower number of swaps but the downside is that we cannot exit early. The
+ * algorithmic analysis for this sort is O(n) = n^2.
+ *
+ * The fourth sorting algorithm we will cover is the quick sort.  It takes a series of numbers, partitions it into
+ * two data sets, and finds a "pivot point" to compare with each element in the array to make swaps to each side to
+ * make one side greater and one side smaller. We then pick another pivot value and restart the process for each
+ * subset of data. The algorithmic analysis for this sort is O(n) = nlgn.
  *
  * @author Michael Muzzarelli
  */
 public class Sorting {
 
-    private static final int SIZE = 2000;
+    private static final int SIZE = 400000;
 
     public static void main(String[] args) {
         int[] values = new int[SIZE];
         Scanner scanner = null;
 
         try {
-            scanner = new Scanner(new File("src/main/resources/search/dataA.txt"));
+            scanner = new Scanner(new File("src/main/resources/search/data400000.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("Error opening the input file!");
             System.exit(0);
@@ -90,12 +96,12 @@ public class Sorting {
 
         // time the appropriate sort
         long start = System.nanoTime();
-        insertionSort(values);
+        quickSort(values);
         long end = System.nanoTime();
 
         // print the sorted array and the time elapsed
         System.out.println(Arrays.toString(values));
-        System.out.println("Time elapsed: " + (end - start / Math.pow(10, 9)));
+        System.out.println("Time elapsed: " + ((end - start) / Math.pow(10, 9)));
 
         // verify the list is in sorted order
         if(isSorted(values))
@@ -166,5 +172,49 @@ public class Sorting {
             // if(index + 1 != i)
             a[index + 1] = temp;
         }
+    }
+
+    public static void quickSort(int[] a) {
+        quick(a, 0, a.length - 1);
+    }
+
+    private static void quick(int[] a, int low, int high) {
+        int pivotIndex = partition(a, low, high);
+
+        if (low < pivotIndex) {
+            quick(a, low, pivotIndex - 1);
+        }
+
+        if (pivotIndex < high) {
+            quick(a, pivotIndex + 1, high);
+        }
+    }
+
+    private static int partition(int[] a, int low, int high) {
+        int pivotValue = a[low];
+
+        while (low < high) {
+            while (low != high && a[high] > pivotValue) {
+                high--;
+            }
+
+            if (low < high) {
+                a[low] = a[high];
+                low++;
+            }
+
+            while (low != high && a[low] < pivotValue) {
+                low++;
+            }
+
+            if (low < high) {
+                a[high] = a[low];
+                high--;
+            }
+        }
+
+        a[low] = pivotValue;
+
+        return low;
     }
 }
