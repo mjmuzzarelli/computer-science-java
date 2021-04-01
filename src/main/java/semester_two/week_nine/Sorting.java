@@ -78,7 +78,7 @@ import java.util.Scanner;
  */
 public class Sorting {
 
-    private static final int SIZE = 2000;
+    private static final int SIZE = 100;
 
     public static void main(String[] args) {
         int[] values = new int[SIZE];
@@ -100,7 +100,7 @@ public class Sorting {
 
         // time the appropriate sort
         long start = System.nanoTime();
-        mergeSort(values);
+        bozoSort(values);
         long end = System.nanoTime();
 
         // print the sorted array and the time elapsed
@@ -270,6 +270,17 @@ public class Sorting {
                 rightIndex++;
                 destinationIndex++;
             } while (rightIndex <= high);
+        }
+    }
+
+    public static void bozoSort(int[] a) {
+        while (!isSorted(a)) {
+            int indexA = (int) (Math.random() * a.length);
+            int indexB = (int) (Math.random() * a.length);
+
+            int temporary = a[indexB];
+            a[indexB] = a[indexA];
+            a[indexA] = temporary;
         }
     }
 }
