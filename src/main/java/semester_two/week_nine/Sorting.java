@@ -70,18 +70,22 @@ import java.util.Scanner;
  * make one side greater and one side smaller. We then pick another pivot value and restart the process for each
  * subset of data. The algorithmic analysis for this sort is O(n) = nlgn.
  *
+ * The fifth sorting algorithm we will cover is the merge sort.  It takes a series of numbers, partitions them into
+ * sub-lists until each element is in a sub-list alone, merges them back together, and merges the two sorted lists
+ * together. The algorithmic analysis for this sort is O(n) = nlgn.
+ *
  * @author Michael Muzzarelli
  */
 public class Sorting {
 
-    private static final int SIZE = 400000;
+    private static final int SIZE = 2000;
 
     public static void main(String[] args) {
         int[] values = new int[SIZE];
         Scanner scanner = null;
 
         try {
-            scanner = new Scanner(new File("src/main/resources/search/data400000.txt"));
+            scanner = new Scanner(new File("src/main/resources/search/data2000.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("Error opening the input file!");
             System.exit(0);
@@ -96,7 +100,7 @@ public class Sorting {
 
         // time the appropriate sort
         long start = System.nanoTime();
-        quickSort(values);
+        mergeSort(values);
         long end = System.nanoTime();
 
         // print the sorted array and the time elapsed
@@ -216,5 +220,56 @@ public class Sorting {
         a[low] = pivotValue;
 
         return low;
+    }
+
+    public static void mergeSort(int[] a) {
+        int[] duplicate = a.clone();
+
+        order(duplicate, a, 0, a.length - 1);
+    }
+
+    private static void order(int[] source, int[] destination, int low, int high) {
+        int middle = -1;
+
+        if (low != high) {
+            middle = (low + high) / 2;
+
+            order(destination, source, low, middle);
+            order(destination, source, middle + 1, high);
+
+            merge(source, destination, low, middle, high);
+        }
+    }
+
+    private static void merge(int[] source, int[] destination, int low, int middle, int high) {
+        int leftIndex = low;
+        int rightIndex = middle + 1;
+        int destinationIndex = low;
+
+        do {
+            if (source[leftIndex] < source[rightIndex]) {
+                destination[destinationIndex] = source[leftIndex];
+                leftIndex++;
+                destinationIndex++;
+            } else {
+                destination[destinationIndex] = source[rightIndex];
+                rightIndex++;
+                destinationIndex++;
+            }
+        } while (leftIndex <= middle && rightIndex <= high);
+
+        if (leftIndex <= middle) {
+            do {
+                destination[destinationIndex] = source[leftIndex];
+                leftIndex++;
+                destinationIndex++;
+            } while (leftIndex <= middle);
+        } else {
+            do {
+                destination[destinationIndex] = source[rightIndex];
+                rightIndex++;
+                destinationIndex++;
+            } while (rightIndex <= high);
+        }
     }
 }
