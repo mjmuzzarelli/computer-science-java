@@ -51,5 +51,31 @@ public class LinkedListDemonstration {
         //System.out.println(myList.get(-2));
         //System.out.println(myList.get(200));
 
+        System.out.println("Value 6 is at " + myList.find(6));
+        if(myList.find(12) > -1)
+            System.out.println("Value 12 is at " + myList.find(12));
+        else
+            System.out.println("12 is not in the list.");
+        if(myList.find(100) > -1)
+            System.out.println("Value 100 is at " + myList.find(100));
+        else
+            System.out.println("100 is not in the list.");
+
+
+        System.out.println("Max = " + myList.findMax());
+        System.out.println("Min = " + myList.findMin());
+
+        myList.removeIndex(2);
+        myList.print();
+        myList.removeIndex(-3);
+        myList.print();
+        myList.removeIndex(5);
+        myList.print();
+        myList.removeIndex(50);
+        myList.print();
+
+        System.out.println("Remove 6...");
+        myList.remove(6);
+        myList.print();
     }
 }

@@ -122,6 +122,52 @@ public class LinkedList {
         }
     }
 
+    public int find(int data) {
+        int index = 0;
+        Node temp = head;
+        while(temp != null) {
+            if(temp.getData() == data)
+                return index;
+            else {
+                index++;
+                temp = temp.next;
+            }
+        }
+        return -1;
+    }
+
+    public int findMin() throws NullPointerException {
+        if(head == null)
+            throw new NullPointerException("List is empty.");
+        return head.getData();
+    }
+
+    public int findMax() throws NullPointerException {
+        if(head == null)
+            throw new NullPointerException("List is empty.");
+        Node temp = head;
+        while(temp.next != null)
+            temp = temp.next;
+        return temp.getData();
+    }
+
+    public void remove(int data) {
+        while(find(data) > -1) {
+            removeIndex(find(data));
+        }
+    }
+
+    public void removeIndex(int i) {
+        Node temp = head, toDelete = null;
+        if(i >= 0 && i < length()) {
+            for(int j=0; j<i-1; j++)
+                temp = temp.next;
+            toDelete = temp.next;
+            temp.next = toDelete.next;
+            toDelete.next = null;
+        }
+    }
+
     private class Node {
 
         private int data;
