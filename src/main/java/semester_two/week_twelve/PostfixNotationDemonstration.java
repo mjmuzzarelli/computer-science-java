@@ -21,8 +21,17 @@ public class PostfixNotationDemonstration {
         //System.out.println(PostfixNotation.evaluate("2 + 3"));
         //System.out.println(PostfixNotation.evaluate("2 -3"));
         System.out.println(PostfixNotation.evaluate("5 3 %"));
+        System.out.println(PostfixNotation.evaluate("8 3 %"));
 
-        //
-        //@TODO: Add Modulus operator to evaluate()
+        // Test conversion from infix to postfix
+        System.out.println(PostfixNotation.infixToPostfix("25 + 3 * (4 - 2)"));
+        System.out.println(PostfixNotation.infixToPostfix("5+353*(4-2)"));
+        System.out.println(PostfixNotation.infixToPostfix("5 + 3*(41 - 2)"));
+        System.out.println(PostfixNotation.infixToPostfix("5+3177  *  (40-20)"));
+        System.out.println(PostfixNotation.infixToPostfix("  5 + 3 * ( 4 - 2 ) "));
+
+
+
+        //System.out.println(PostFix.evaluate(PostfixNotation.infixToPostfix("5 + 3 * (4 - 2)")));
     }
 }

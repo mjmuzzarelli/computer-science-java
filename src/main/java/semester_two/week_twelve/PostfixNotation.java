@@ -75,6 +75,45 @@ public class PostfixNotation {
     }
 
     public static String infixToPostfix(String s) {
+        System.out.println("Expression: " + s);
+
+        s = s.replaceAll("\\+", " + ");
+        s = s.replaceAll("-", " - ");
+        s = s.replaceAll("\\*", " * ");
+        s = s.replaceAll("/", " / ");
+        s = s.replaceAll("%", " % ");
+        s = s.replaceAll("\\^", " ^ ");
+        s = s.replaceAll("\\(", " ( ");
+        s = s.replaceAll("\\)", " ) ");
+
+        System.out.println("Expression with spaces: " + s);
+
+        /* @TODO
+        If element is a number, put on postfix string
+        else
+          if stack is empty, or (, push.
+          else if ) pop and put on postfix string until find matching (
+          else if prec(peek) < prec(current), push
+        else pop and put on postfix string while prec(peek) >= prec(current)
+
+
+        */
+
         return null;
+    }
+
+    private int precedenceOf(char operator) {
+        int precedence = 0;
+
+        switch (operator) {
+            case '^': precedence++;
+            case '/':
+            case '*':
+            case '%': precedence++;
+            case '+':
+            case '-': precedence++;
+        }
+
+        return precedence;
     }
 }
