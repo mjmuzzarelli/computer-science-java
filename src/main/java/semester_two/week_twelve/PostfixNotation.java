@@ -55,14 +55,15 @@ public class PostfixNotation {
                     case "+": values.push(leftOp + rightOp); break;
                     case "-": values.push(leftOp - rightOp); break;
                     case "*": values.push(leftOp * rightOp); break;
+                    case "%": values.push(leftOp % rightOp); break;
                     case "/":
-                        if (rightOp == 0) {
-                            throw new NumberFormatException("Cannot divide by zero!");
+                        if(rightOp == 0)  {
+                            throw new NumberFormatException("Cannot divide by zero.");
                         }
 
                         values.push(leftOp / rightOp); break;
-                    case "^": values.push((int) Math.pow(leftOp, rightOp)); break;
-                    default: throw new InputMismatchException("Operator unrecognized!");
+                    case "^": values.push((int)Math.pow(leftOp,rightOp)); break;
+                    default: throw new InputMismatchException("Operator unrecognized.");
                 }
             }
         }
@@ -75,8 +76,24 @@ public class PostfixNotation {
     }
 
     public static String infixToPostfix(String s) {
-        System.out.println("Expression: " + s);
+        // step one: strip all spaces
+        s = s.replaceAll(" ", "");
 
+        // step two: if the leading character is "-", change to "~"
+        if (s.charAt(0) == '-') {
+            s = "~" + s.substring(1);
+        }
+
+        // step three: find all negation symbols, change to "~"
+        s = s.replaceAll("\\+-", "+~");
+        s = s.replaceAll("--", "-~");
+        s = s.replaceAll("\\*-", "*~");
+        s = s.replaceAll("/-", "/~");
+        s = s.replaceAll("%-", "%~");
+        s = s.replaceAll("\\^-", "^~");
+        s = s.replaceAll("\\(-", "(~");
+
+        // step four: find all operators, add space to separate from operands
         s = s.replaceAll("\\+", " + ");
         s = s.replaceAll("-", " - ");
         s = s.replaceAll("\\*", " * ");
@@ -86,23 +103,63 @@ public class PostfixNotation {
         s = s.replaceAll("\\(", " ( ");
         s = s.replaceAll("\\)", " ) ");
 
-        System.out.println("Expression with spaces: " + s);
+        // step five: replace negation symbol "~" with "-1 *"
+        s = s.replaceAll("~", " -1 * ");
 
-        /* @TODO
-        If element is a number, put on postfix string
-        else
-          if stack is empty, or (, push.
-          else if ) pop and put on postfix string until find matching (
-          else if prec(peek) < prec(current), push
-        else pop and put on postfix string while prec(peek) >= prec(current)
+        Scanner input = new Scanner(s);
+        Stack<String> ops = new Stack<>();
+        StringBuilder postfix = new StringBuilder();
+        String token = null;
 
+        while (input.hasNext()) {
+            if (input.hasNextInt()) {
+                postfix.append(input.nextInt()).append(" ");
 
-        */
+            } else {
+                token = input.next();
 
-        return null;
+                // verify next token is a recognizable operator
+                if(!(token.equals("+") || token.equals("-") ||
+                        token.equals("*") || token.equals("/") ||
+                        token.equals("%") || token.equals("^") ||
+                        token.equals("(") || token.equals(")")))
+                    throw new IllegalArgumentException("Operator not recognized.");
+
+                if (ops.isEmpty() || token.equals("(")) {
+                    ops.push(token);
+
+                } else if (token.equals(")")) {
+                    while (!ops.peek().equals("(")) {
+                        postfix.append(ops.pop()).append(" ");
+                    }
+
+                    ops.pop();
+
+                } else if (precedenceOf(ops.peek().charAt(0)) <
+                        precedenceOf(token.charAt(0))) {
+                    ops.push(token);
+
+                } else {
+                    while (!ops.isEmpty() &&
+                            precedenceOf(ops.peek().charAt(0)) >=
+                            precedenceOf(token.charAt(0))) {
+                        postfix.append(ops.pop()).append(" ");
+                    }
+
+                    ops.push(token);
+                }
+            }
+        }
+
+        // pop the rest of the operators off the stack and append
+        while (!ops.isEmpty()) {
+            postfix.append(ops.pop()).append(" ");
+        }
+
+        return postfix.substring(0, postfix.length() - 1);
     }
 
-    private int precedenceOf(char operator) {
+    private static int precedenceOf(char operator) {
         int precedence = 0;
 
         switch (operator) {

@@ -23,15 +23,31 @@ public class PostfixNotationDemonstration {
         System.out.println(PostfixNotation.evaluate("5 3 %"));
         System.out.println(PostfixNotation.evaluate("8 3 %"));
 
-        // Test conversion from infix to postfix
+        System.out.println("Done testing evaluations...");
+
+        // Test conversion from infix to PostfixNotation
         System.out.println(PostfixNotation.infixToPostfix("25 + 3 * (4 - 2)"));
         System.out.println(PostfixNotation.infixToPostfix("5+353*(4-2)"));
         System.out.println(PostfixNotation.infixToPostfix("5 + 3*(41 - 2)"));
         System.out.println(PostfixNotation.infixToPostfix("5+3177  *  (40-20)"));
         System.out.println(PostfixNotation.infixToPostfix("  5 + 3 * ( 4 - 2 ) "));
+        System.out.println(PostfixNotation.infixToPostfix("2^(((3-4)*2 + (2*3)^2 * 2) - 30*(3-1))"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("2^(((3-4)*2 + (2*3)^2 * 2) - 30*(3-1))")));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("5 + 3 * (4 - 2)")));
 
+        // Still need to address subtraction vs negation.
+        System.out.println(PostfixNotation.infixToPostfix("2 - -3"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("2 - -3")));
+        System.out.println(PostfixNotation.infixToPostfix("2 * -3"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("2 * -3")));
+        System.out.println(PostfixNotation.infixToPostfix("-2 - -3"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("-2 - -3")));
+        System.out.println(PostfixNotation.infixToPostfix("-2 - (4*-5)"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("-2 - (4*-5)")));
+        System.out.println(PostfixNotation.infixToPostfix("3*-(-(4-1)*2)"));
+        System.out.println(PostfixNotation.evaluate(PostfixNotation.infixToPostfix("3*-(-(4-1)*2)")));
 
+        // Last to address is ^
 
-        //System.out.println(PostFix.evaluate(PostfixNotation.infixToPostfix("5 + 3 * (4 - 2)")));
     }
 }
